@@ -10,6 +10,20 @@ namespace Aware
 {
     class Program
     {
+        public static void RegValueEnum()
+        {
+            RegistryKey test = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Internet Explorer");
+            
+            using (RegistryKey tempKey = test.OpenSubKeyTypedURLs"))
+            {
+                Console.WriteLine("\r\n==TYPED URLS ===\r\n");
+                foreach (string valuName in tempKey.GetValueNames())
+                {
+                    Console.WriteLine("\t" + "[*] " + "{0}: {1}", valueName, tempKey.GetValue(valueName).ToString());
+                }
+            }
+        }
+        
         public static void Processes()
         {
             Console.WriteLine("\r\n=== PROCESS CHECKING ===\r\n");
