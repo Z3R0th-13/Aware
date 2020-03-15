@@ -14,10 +14,10 @@ namespace Aware
         {
             RegistryKey test = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Internet Explorer");
             
-            using (RegistryKey tempKey = test.OpenSubKeyTypedURLs"))
+            using (RegistryKey tempKey = test.OpenSubKey("TypedURLs"))
             {
                 Console.WriteLine("\r\n==TYPED URLS ===\r\n");
-                foreach (string valuName in tempKey.GetValueNames())
+                foreach (string valueName in tempKey.GetValueNames())
                 {
                     Console.WriteLine("\t" + "[*] " + "{0}: {1}", valueName, tempKey.GetValue(valueName).ToString());
                 }
