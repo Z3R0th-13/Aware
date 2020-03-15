@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Net.NetworkInformation;
@@ -13,17 +13,30 @@ namespace Aware
         public static void RegValueEnum()
         {
             RegistryKey test = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Internet Explorer");
-            
-            using (RegistryKey tempKey = test.OpenSubKey("TypedURLs"))
+
+            RegistryKey checkme = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Internet Explorer");
+
+            object fuckshit = checkme.GetValue("TypedURLs", null);
+
+            if (fuckshit != null)
             {
-                Console.WriteLine("\r\n==TYPED URLS ===\r\n");
-                foreach (string valueName in tempKey.GetValueNames())
+                using (RegistryKey tempKey = test.OpenSubKey("TypedURLs"))
                 {
-                    Console.WriteLine("\t" + "[*] " + "{0}: {1}", valueName, tempKey.GetValue(valueName).ToString());
+                    Console.WriteLine("\r\n===TYPED URLS ===\r\n");
+                    foreach (string valueName in tempKey.GetValueNames())
+                    {
+                        Console.WriteLine("\t" + "[*] " + "{0}: {1}", valueName, tempKey.GetValue(valueName).ToString());
+                    }
                 }
             }
+            else{
+                Console.WriteLine("\r\n=== TYPED URLS ===\r\n");
+                Console.WriteLine("\t" + "[*] " + "I couldn't find anything");
+            }
+
+            
         }
-        
+
         public static void Processes()
         {
             Console.WriteLine("\r\n=== PROCESS CHECKING ===\r\n");
@@ -56,7 +69,7 @@ namespace Aware
                 {
                     // Do nothing
                 }
-                if (checkme == "esensor") 
+                if (checkme == "esensor")
                 {
                     Console.WriteLine("\t" + "[*] ENDGAME is running");
                 }
@@ -98,7 +111,7 @@ namespace Aware
                 }
             }
         }
-        
+
         public static void QueryMcafee()
         {
             // NEED TO FIX THIS! I NEED THE REGISTRY PATH AND KEY VALUE FOR MCAFEE!
@@ -233,7 +246,7 @@ namespace Aware
                     {
                         if (ip.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
                         {
-                            Console.WriteLine("\t" +"[*] "+ ni.Name + " " + ip.Address.ToString());
+                            Console.WriteLine("\t" + "[*] " + ni.Name + " " + ip.Address.ToString());
                         }
                     }
                 }
@@ -247,8 +260,9 @@ namespace Aware
             Processes(); // Query the system to see if specific processes are running
             IsCurrentUserAdmin(); // Check if the user is currently running in an administrative context
             ListLapsSettings(); // Check whether or not LAPS is enabled
-            //Console.ReadLine(); // Remove in production.
-            Console.WriteLine("Finished");
+            RegValueEnum(); // Checked for typed in URLs in IE.
+            Console.WriteLine("\n\rFinished");
+            Console.ReadLine(); // Remove in production.
         }
     }
 }
