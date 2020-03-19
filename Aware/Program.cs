@@ -10,17 +10,32 @@ namespace Aware
 {
     class Program
     {
+        public static void Banner()
+        {
+            Console.WriteLine(@"   _____  __      __  _____ _____________________
+  /  _  \/  \    /  \/  _  \\______   \_   _____/
+ /  /_\  \   \/\/   /  /_\  \|       _/|    __)_ 
+/    |    \        /    |    \    |   \|        \
+\____|__  /\__/\  /\____|__  /____|_  /_______  /
+        \/      \/         \/       \/        \/ 
+             _____)        _____)                
+            /_____/       /_____/                
+            /    \        /    \                 
+           (  ()  )      (  ()  )                
+            \____/ ______ \____/                 
+                  /_____/                        ");
+        }
+    
+
         public static void RegValueEnum()
         {
-            RegistryKey test = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Internet Explorer");
-
             RegistryKey checkme = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Internet Explorer");
 
             object URLs = checkme.GetValue("TypedURLs", null);
 
             if (URLs != null)
             {
-                using (RegistryKey tempKey = test.OpenSubKey("TypedURLs"))
+                using (RegistryKey tempKey = checkme.OpenSubKey("TypedURLs"))
                 {
                     Console.WriteLine("\r\n===TYPED URLS ===\r\n");
                     foreach (string valueName in tempKey.GetValueNames())
@@ -33,10 +48,8 @@ namespace Aware
                 Console.WriteLine("\r\n=== TYPED URLS ===\r\n");
                 Console.WriteLine("\t" + "[*] " + "I couldn't find anything");
             }
-
-            
         }
-
+        
         public static void Processes()
         {
             Console.WriteLine("\r\n=== PROCESS CHECKING ===\r\n");
@@ -109,6 +122,22 @@ namespace Aware
                 {
                     // Do nothing
                 }
+                if (checkme == "winlogbeat")
+                {
+                    Console.WriteLine("\t" + "[*] Winlogbeat is running");
+                }
+                else
+                {
+                    // Do nothing
+                }
+                if (checkme == "vmnetdhcp")
+                {
+                    Console.WriteLine("\t" + "[*] Vmware is running");
+                }
+                else
+                {
+                    // Do nothing
+                }
             }
         }
 
@@ -150,7 +179,7 @@ namespace Aware
             }
             else
             {
-                Console.WriteLine("\t" + "[*] LAPS not installed");
+                Console.WriteLine("\t" + "[*] LAPS is not enabled");
             }
         }
 
@@ -246,7 +275,8 @@ namespace Aware
                     {
                         if (ip.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
                         {
-                            Console.WriteLine("\t" + "[*] " + ni.Name + " " + ip.Address.ToString());
+                            string macdaddy = ni.GetPhysicalAddress().ToString();
+                            Console.WriteLine("\t" + "[*] " + ni.Name + " " + ip.Address.ToString() + "\r\n\t\t" + "Mac address is: " + macdaddy);
                         }
                     }
                 }
@@ -255,13 +285,17 @@ namespace Aware
 
         static void Main(string[] args)
         {
+            Banner(); // Print Banner
             HostnameAndIP(); // Grab the hostname and IP addresses associated with the machine
             QueryMcafee(); // Query registry for McAfee exclusion list
             Processes(); // Query the system to see if specific processes are running
             IsCurrentUserAdmin(); // Check if the user is currently running in an administrative context
             ListLapsSettings(); // Check whether or not LAPS is enabled
             RegValueEnum(); // Checked for typed in URLs in IE.
-            Console.WriteLine("\n\rFinished");
+            Console.WriteLine(
+                "\r\n==================================\r\n" +
+                "=========== FINISHED =============\r\n" +
+                "==================================");
             Console.ReadLine(); // Remove in production.
         }
     }
