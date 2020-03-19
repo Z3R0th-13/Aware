@@ -5,6 +5,7 @@ using System.Net.NetworkInformation;
 using Microsoft.Win32;
 using System.Security.Principal;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace Aware
 {
@@ -25,13 +26,21 @@ namespace Aware
             \____/ ______ \____/                 
                   /_____/                        ");
         }
-    
 
-        public static void RegValueEnum()
+        public static void DateandTime()
         {
-            RegistryKey checkme = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Internet Explorer");
+            DateTime localDate = DateTime.Now;
+            DateTime utcDate = DateTime.UtcNow;
+            Console.WriteLine("\r\n=== Date / Time ===\r\n");
+            Console.WriteLine("\t" + "[*] " + "Current localtime is: " + localDate);
+            Console.WriteLine("\t" + "[*] " + "UTC current time is: " + utcDate);
+        }
+    
+        public static void IEEnum()
+        {
+            RegistryKey checkme = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Internet Explorer\\");
 
-            object URLs = checkme.GetValue("TypedURLs", null);
+            object URLs = checkme.GetValue("TypedURLs", "");
 
             if (URLs != null)
             {
@@ -49,7 +58,38 @@ namespace Aware
                 Console.WriteLine("\t" + "[*] " + "I couldn't find anything");
             }
         }
-        
+
+        public static void OfficeEnum()
+        {
+            try
+            {
+                RegistryKey checkme = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Office\\16.0\\PowerPoint\\Security\\Trusted Documents");
+                object trustRecs = checkme.GetValue("TrustRecords", "");
+
+                if (trustRecs != null)
+                {
+                    using (RegistryKey tempKey = checkme.OpenSubKey("TrustRecords"))
+                    {
+                        Console.WriteLine("\r\n===TRUSTED FILES ===\r\n");
+                        foreach (string valueName in tempKey.GetValueNames())
+                        {
+                            Console.WriteLine("\t" + "[*] " + "{0}: {1}", valueName, tempKey.GetValue(valueName).ToString());
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("\r\n=== TRUSTED FILES ===\r\n");
+                    Console.WriteLine("\t" + "[*] " + "I couldn't find anything");
+                    Console.WriteLine(trustRecs);
+                }
+            }
+            catch
+            {
+                // Do nothing
+            }
+        }
+
         public static void Processes()
         {
             Console.WriteLine("\r\n=== PROCESS CHECKING ===\r\n");
@@ -286,12 +326,14 @@ namespace Aware
         static void Main(string[] args)
         {
             Banner(); // Print Banner
+            DateandTime();
             HostnameAndIP(); // Grab the hostname and IP addresses associated with the machine
             QueryMcafee(); // Query registry for McAfee exclusion list
             Processes(); // Query the system to see if specific processes are running
             IsCurrentUserAdmin(); // Check if the user is currently running in an administrative context
             ListLapsSettings(); // Check whether or not LAPS is enabled
-            RegValueEnum(); // Checked for typed in URLs in IE.
+            IEEnum(); // Checked for typed in URLs in IE.
+            OfficeEnum();
             Console.WriteLine(
                 "\r\n==================================\r\n" +
                 "=========== FINISHED =============\r\n" +
