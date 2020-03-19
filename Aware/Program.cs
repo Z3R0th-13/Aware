@@ -46,7 +46,7 @@ namespace Aware
             {
                 using (RegistryKey tempKey = checkme.OpenSubKey("TypedURLs"))
                 {
-                    Console.WriteLine("\r\n===TYPED URLS ===\r\n");
+                    Console.WriteLine("\r\n=== TYPED URLS ===\r\n");
                     foreach (string valueName in tempKey.GetValueNames())
                     {
                         Console.WriteLine("\t" + "[*] " + "{0}: {1}", valueName, tempKey.GetValue(valueName).ToString());
@@ -56,6 +56,118 @@ namespace Aware
             else{
                 Console.WriteLine("\r\n=== TYPED URLS ===\r\n");
                 Console.WriteLine("\t" + "[*] " + "I couldn't find anything");
+            }
+        }
+
+        public static void DefenderExclude()
+        {
+            try
+            {
+                RegistryKey checkme = Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\Windows Defender\\Exclusions\\");
+
+                object Excludes = checkme.GetValue("Paths", "");
+
+                if (Excludes != null)
+                {
+                    using (RegistryKey tempKey = checkme.OpenSubKey("Paths"))
+                    {
+                        Console.WriteLine("\r\n=== Windows Defender Path Exclusions ===\r\n");
+                        foreach (string valueName in tempKey.GetValueNames())
+                        {
+                            Console.WriteLine("\t" + "[*] " + "{0}: {1}", valueName, tempKey.GetValue(valueName).ToString());
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("\r\n=== Windows Defender Path Exclusions ===\r\n");
+                    Console.WriteLine("\t" + "[*] " + "I couldn't find anything");
+                }
+            }
+            catch
+            {
+                // Do Nothing
+            }
+            try
+            {
+                RegistryKey checkme = Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\Windows Defender\\Exclusions\\");
+
+                object Excludes = checkme.GetValue("Extensions", "");
+
+                if (Excludes != null)
+                {
+                    using (RegistryKey tempKey = checkme.OpenSubKey("Extensions"))
+                    {
+                        Console.WriteLine("\r\n=== Windows Defender Extension Exclusions ===\r\n");
+                        foreach (string valueName in tempKey.GetValueNames())
+                        {
+                            Console.WriteLine("\t" + "[*] " + "{0}: {1}", valueName, tempKey.GetValue(valueName).ToString());
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("\r\n=== Windows Defender Extension Exclusions ===\r\n");
+                    Console.WriteLine("\t" + "[*] " + "I couldn't find anything");
+                }
+            }
+            catch
+            {
+                // Do Nothing
+            }
+            try
+            {
+                RegistryKey checkme = Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\Windows Defender\\Exclusions\\");
+
+                object Excludes = checkme.GetValue("Processes", "");
+
+                if (Excludes != null)
+                {
+                    using (RegistryKey tempKey = checkme.OpenSubKey("Processes"))
+                    {
+                        Console.WriteLine("\r\n=== Windows Defender Process Exclusions ===\r\n");
+                        foreach (string valueName in tempKey.GetValueNames())
+                        {
+                            Console.WriteLine("\t" + "[*] " + "{0}: {1}", valueName, tempKey.GetValue(valueName).ToString());
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("\r\n=== Windows Defender Process Exclusions ===\r\n");
+                    Console.WriteLine("\t" + "[*] " + "I couldn't find anything");
+                }
+            }
+            catch
+            {
+                // Do Nothing
+            }
+            try
+            {
+                RegistryKey checkme = Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\Windows Defender\\Exclusions\\");
+
+                object Excludes = checkme.GetValue("TemporaryPaths", "");
+
+                if (Excludes != null)
+                {
+                    using (RegistryKey tempKey = checkme.OpenSubKey("TemporaryPaths"))
+                    {
+                        Console.WriteLine("\r\n=== Windows Defender Temporary Path Exclusions ===\r\n");
+                        foreach (string valueName in tempKey.GetValueNames())
+                        {
+                            Console.WriteLine("\t" + "[*] " + "{0}: {1}", valueName, tempKey.GetValue(valueName).ToString());
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("\r\n=== Windows Defender Temporary Path Exclusions ===\r\n");
+                    Console.WriteLine("\t" + "[*] " + "I couldn't find anything");
+                }
+            }
+            catch
+            {
+                // Do Nothing
             }
         }
 
@@ -70,7 +182,7 @@ namespace Aware
                 {
                     using (RegistryKey tempKey = checkme.OpenSubKey("TrustRecords"))
                     {
-                        Console.WriteLine("\r\n===TRUSTED FILES ===\r\n");
+                        Console.WriteLine("\r\n=== PPT TRUSTED FILES ===\r\n");
                         foreach (string valueName in tempKey.GetValueNames())
                         {
                             Console.WriteLine("\t" + "[*] " + "{0}: {1}", valueName, tempKey.GetValue(valueName).ToString());
@@ -79,7 +191,7 @@ namespace Aware
                 }
                 else
                 {
-                    Console.WriteLine("\r\n=== TRUSTED FILES ===\r\n");
+                    Console.WriteLine("\r\n=== PPT TRUSTED FILES ===\r\n");
                     Console.WriteLine("\t" + "[*] " + "I couldn't find anything");
                     Console.WriteLine(trustRecs);
                 }
@@ -88,6 +200,61 @@ namespace Aware
             {
                 // Do nothing
             }
+            try
+            {
+                RegistryKey checkme = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Office\\16.0\\Excel\\Security\\Trusted Documents");
+                object trustRecs = checkme.GetValue("TrustRecords", "");
+
+                if (trustRecs != null)
+                {
+                    using (RegistryKey tempKey = checkme.OpenSubKey("TrustRecords"))
+                    {
+                        Console.WriteLine("\r\n=== EXCEL TRUSTED FILES ===\r\n");
+                        foreach (string valueName in tempKey.GetValueNames())
+                        {
+                            Console.WriteLine("\t" + "[*] " + "{0}: {1}", valueName, tempKey.GetValue(valueName).ToString());
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("\r\n=== EXCEL TRUSTED FILES ===\r\n");
+                    Console.WriteLine("\t" + "[*] " + "I couldn't find anything");
+                    Console.WriteLine(trustRecs);
+                }
+            }
+            catch
+            {
+                // Do nothing
+            }
+            try
+            {
+                RegistryKey checkme = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Office\\16.0\\Word\\Security\\Trusted Documents");
+                object trustRecs = checkme.GetValue("TrustRecords", "");
+
+                if (trustRecs != null)
+                {
+                    using (RegistryKey tempKey = checkme.OpenSubKey("TrustRecords"))
+                    {
+                        Console.WriteLine("\r\n=== WORD TRUSTED FILES ===\r\n");
+                        foreach (string valueName in tempKey.GetValueNames())
+                        {
+                            Console.WriteLine("\t" + "[*] " + "{0}: {1}", valueName, tempKey.GetValue(valueName).ToString());
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("\r\n=== WORD TRUSTED FILES ===\r\n");
+                    Console.WriteLine("\t" + "[*] " + "I couldn't find anything");
+                    Console.WriteLine(trustRecs);
+                }
+            }
+            catch
+            {
+                // Do nothing
+            }
+
         }
 
         public static void Processes()
@@ -333,7 +500,8 @@ namespace Aware
             IsCurrentUserAdmin(); // Check if the user is currently running in an administrative context
             ListLapsSettings(); // Check whether or not LAPS is enabled
             IEEnum(); // Checked for typed in URLs in IE.
-            OfficeEnum();
+            OfficeEnum(); // Look for trusted documents
+            DefenderExclude(); // Look for paths that have been specifically excluded from Windows Defender
             Console.WriteLine(
                 "\r\n==================================\r\n" +
                 "=========== FINISHED =============\r\n" +
