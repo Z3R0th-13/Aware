@@ -174,8 +174,8 @@ namespace Aware
                 string LAPSPasswordLength = GetRegValue("HKLM", "Software\\Policies\\Microsoft Services\\AdmPwd", "PasswordLength");
                 Console.WriteLine("  {0,-37} : {1}", "LAPS Password Length", LAPSPasswordLength);
 
-                string LASPwdExpirationProtectionEnabled = GetRegValue("HKLM", "Software\\Policies\\Microsoft Services\\AdmPwd", "PwdExpirationProtectionEnabled");
-                Console.WriteLine("  {0,-37} : {1}", "LAPS Expiration Protection Enabled", LASPwdExpirationProtectionEnabled);
+                string LAPSwdExpirationProtectionEnabled = GetRegValue("HKLM", "Software\\Policies\\Microsoft Services\\AdmPwd", "PwdExpirationProtectionEnabled");
+                Console.WriteLine("  {0,-37} : {1}", "LAPS Expiration Protection Enabled", LAPSwdExpirationProtectionEnabled);
             }
             else
             {
