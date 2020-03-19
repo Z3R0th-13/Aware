@@ -16,9 +16,9 @@ namespace Aware
 
             RegistryKey checkme = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Internet Explorer");
 
-            object fuckshit = checkme.GetValue("TypedURLs", null);
+            object URLs = checkme.GetValue("TypedURLs", null);
 
-            if (fuckshit != null)
+            if (URLs != null)
             {
                 using (RegistryKey tempKey = test.OpenSubKey("TypedURLs"))
                 {
@@ -220,7 +220,7 @@ namespace Aware
             try
             {
                 // Get the local computer host name.
-                Console.WriteLine("=== HOSTNAME ===\r\n");
+                Console.WriteLine("\r\n=== HOSTNAME ===\r\n");
                 Console.WriteLine("\t" + "[*] Hostname: " + hostName);
             }
             catch (SocketException e)
