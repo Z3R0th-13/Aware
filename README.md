@@ -1,6 +1,8 @@
 # Aware
 Host Enumeration is key!
 
+<img src="https://github.com/Z3R0th-13/Aware/blob/master/Aware/aware.PNG">
+
 You can use this tool to get a better understanding of the machine you're currently on. Can easily be ran within Cobalt Strike using the execute-assembly comnmand.
 
 Currently this looks at: 
