@@ -9,6 +9,7 @@ Currently this looks at:
 - LAPS Settings
 - Check if running as admin
 - Hostname, IP, MAC
+- Trusted Documents
 - Windows Defender Exclusions
 
 Working on: 
