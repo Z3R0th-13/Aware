@@ -1,6 +1,1 @@
-c:\users\cloud\documents\visual studio 2017\Projects\Aware\Aware\bin\Debug\Aware.exe.config
-c:\users\cloud\documents\visual studio 2017\Projects\Aware\Aware\bin\Debug\Aware.exe
-c:\users\cloud\documents\visual studio 2017\Projects\Aware\Aware\bin\Debug\Aware.pdb
-c:\users\cloud\documents\visual studio 2017\Projects\Aware\Aware\obj\Debug\Aware.csprojResolveAssemblyReference.cache
-c:\users\cloud\documents\visual studio 2017\Projects\Aware\Aware\obj\Debug\Aware.exe
-c:\users\cloud\documents\visual studio 2017\Projects\Aware\Aware\obj\Debug\Aware.pdb
+
