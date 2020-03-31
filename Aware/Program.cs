@@ -1,15 +1,18 @@
-using System;
-using System.Net;
-using System.Net.Sockets;
-using System.Net.NetworkInformation;
-using Microsoft.Win32;
-using System.Security.Principal;
-using System.Diagnostics;
-using System.Collections.Generic;
+// <copyright file="Program.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace Aware
 {
-    class Program
+    using System;
+    using System.Diagnostics;
+    using System.Net;
+    using System.Net.NetworkInformation;
+    using System.Net.Sockets;
+    using System.Security.Principal;
+    using Microsoft.Win32;
+
+    internal class Program
     {
         public static void Banner()
         {
@@ -35,20 +38,22 @@ namespace Aware
             Console.WriteLine("\t" + "[*] " + "Current localtime is: " + localDate);
             Console.WriteLine("\t" + "[*] " + "UTC current time is: " + utcDate);
         }
-    
+
         public static void IEEnum() // Checks the registry for manually typed in URLs in Internet Explorer.
         {
             RegistryKey checkme = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Internet Explorer\\"); // Registry hive and keys to look at. 
 
-            object URLs = checkme.GetValue("TypedURLs", ""); // Subkey to actually look at
+            object uRLs = checkme.GetValue("TypedURLs", string.Empty); // Subkey to actually look at
 
-            if (URLs != null)
+            if (uRLs != null)
             {
                 using (RegistryKey tempKey = checkme.OpenSubKey("TypedURLs"))
                 {
                     Console.WriteLine("\r\n=== TYPED URLS ===\r\n");
-                    foreach (string valueName in tempKey.GetValueNames()) // For every value in the subkey, print the values.
+                    string[] array = tempKey.GetValueNames();
+                    for (int i = 0; i < array.Length; i++) // For every value in the subkey, print the values.
                     {
+                        string valueName = array[i];
                         Console.WriteLine("\t" + "[*] " + "{0}: {1}", valueName, tempKey.GetValue(valueName).ToString());
                     }
                 }
@@ -66,9 +71,9 @@ namespace Aware
             {
                 RegistryKey checkme = Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\Windows Defender\\Exclusions\\"); // Registry hive and keys to look at
 
-                object Excludes = checkme.GetValue("Paths", ""); // Subkey to actually look at
+                object excludes = checkme.GetValue("Paths", string.Empty); // Subkey to actually look at
 
-                if (Excludes != null)
+                if (excludes != null)
                 {
                     using (RegistryKey tempKey = checkme.OpenSubKey("Paths"))
                     {
@@ -89,13 +94,14 @@ namespace Aware
             {
                 // Do Nothing
             }
+
             try
             {
                 RegistryKey checkme = Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\Windows Defender\\Exclusions\\"); // Registry hive and keys to look at
 
-                object Excludes = checkme.GetValue("Extensions", ""); // Subkey to actually look at
+                object excludes = checkme.GetValue("Extensions", string.Empty); // Subkey to actually look at
 
-                if (Excludes != null)
+                if (excludes != null)
                 {
                     using (RegistryKey tempKey = checkme.OpenSubKey("Extensions"))
                     {
@@ -116,13 +122,14 @@ namespace Aware
             {
                 // Do Nothing
             }
+
             try
             {
                 RegistryKey checkme = Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\Windows Defender\\Exclusions\\"); // Hive and keys to look at
 
-                object Excludes = checkme.GetValue("Processes", ""); // Subkey to actually look at 
+                object excludes = checkme.GetValue("Processes", string.Empty); // Subkey to actually look at 
 
-                if (Excludes != null)
+                if (excludes != null)
                 {
                     using (RegistryKey tempKey = checkme.OpenSubKey("Processes"))
                     {
@@ -143,13 +150,14 @@ namespace Aware
             {
                 // Do Nothing
             }
+
             try
             {
                 RegistryKey checkme = Registry.LocalMachine.OpenSubKey("Software\\Microsoft\\Windows Defender\\Exclusions\\"); // Hive and keys to look at
 
-                object Excludes = checkme.GetValue("TemporaryPaths", ""); // Subkey to actually look at
+                object excludes = checkme.GetValue("TemporaryPaths", string.Empty); // Subkey to actually look at
 
-                if (Excludes != null)
+                if (excludes != null)
                 {
                     using (RegistryKey tempKey = checkme.OpenSubKey("TemporaryPaths"))
                     {
@@ -178,7 +186,7 @@ namespace Aware
             {
                 RegistryKey checkme = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Office\\16.0\\PowerPoint\\Security\\Trusted Documents"); // Hive and keys to look at
 
-                object trustRecs = checkme.GetValue("TrustRecords", ""); // Subkey to actually look at
+                object trustRecs = checkme.GetValue("TrustRecords", string.Empty); // Subkey to actually look at
 
                 if (trustRecs != null)
                 {
@@ -202,10 +210,11 @@ namespace Aware
             {
                 // Do nothing
             }
+
             try
             {
                 RegistryKey checkme = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Office\\16.0\\Excel\\Security\\Trusted Documents"); // Hive and keys to look at
-                object trustRecs = checkme.GetValue("TrustRecords", ""); // Subkey to actually look at
+                object trustRecs = checkme.GetValue("TrustRecords", string.Empty); // Subkey to actually look at
 
                 if (trustRecs != null)
                 {
@@ -229,10 +238,11 @@ namespace Aware
             {
                 // Do nothing
             }
+
             try
             {
                 RegistryKey checkme = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Office\\16.0\\Word\\Security\\Trusted Documents"); // Hive and keys to look at
-                object trustRecs = checkme.GetValue("TrustRecords", ""); // Subkey to actually look at 
+                object trustRecs = checkme.GetValue("TrustRecords", string.Empty); // Subkey to actually look at 
 
                 if (trustRecs != null)
                 {
@@ -256,7 +266,6 @@ namespace Aware
             {
                 // Do nothing
             }
-
         }
 
         public static void Processes() // Check current running processes for different things such as AV, EDR, or VMs
@@ -275,6 +284,7 @@ namespace Aware
                 {
                     // Do nothing
                 }
+
                 if (checkme == "masvc") // Common process for McAfee
                 {
                     Console.WriteLine("\t" + "[*] McAfee Agent is running");
@@ -283,6 +293,7 @@ namespace Aware
                 {
                     // Do nothing
                 }
+
                 if (checkme == "Mcshield") // VSE Process
                 {
                     Console.WriteLine("\t" + "[*] McAfee VSE is running");
@@ -291,6 +302,7 @@ namespace Aware
                 {
                     // Do nothing
                 }
+
                 if (checkme == "esensor") // Endgame process
                 {
                     Console.WriteLine("\t" + "[*] ENDGAME is running");
@@ -299,6 +311,7 @@ namespace Aware
                 {
                     // Do nothing
                 }
+
                 if (checkme == "sysmon") // Sysmon process
                 {
                     Console.WriteLine("\t" + "[*] SYSMON is running");
@@ -307,6 +320,7 @@ namespace Aware
                 {
                     // Do nothing
                 }
+
                 if (checkme == "Procmon") // Procmon process
                 {
                     Console.WriteLine("\t" + "[*] Procmon is running");
@@ -315,6 +329,7 @@ namespace Aware
                 {
                     // Do nothing
                 }
+
                 if (checkme == "splunkd") // Splunk process
                 {
                     Console.WriteLine("\t" + "[*] Splunk is running");
@@ -323,6 +338,7 @@ namespace Aware
                 {
                     // Do nothing
                 }
+
                 if (checkme == "TaniumClient") // Tanium process
                 {
                     Console.WriteLine("\t" + "[*] Tanium is running");
@@ -331,6 +347,7 @@ namespace Aware
                 {
                     // Do nothing
                 }
+
                 if (checkme == "winlogbeat") // Winlogbeat process
                 {
                     Console.WriteLine("\t" + "[*] Winlogbeat is running");
@@ -339,6 +356,7 @@ namespace Aware
                 {
                     // Do nothing
                 }
+
                 if (checkme == "vmnetdhcp") // Vmware DHCP process. Indicitive of running vmware.
                 {
                     Console.WriteLine("\t" + "[*] Vmware is running");
@@ -368,23 +386,23 @@ namespace Aware
         {
             Console.WriteLine("\r\n=== LAPS Settings ===\r\n");
 
-            string AdmPwdEnabled = GetRegValue("HKLM", "Software\\Policies\\Microsoft Services\\AdmPwd", "AdmPwdEnabled");
+            string admPwdEnabled = GetRegValue("HKLM", "Software\\Policies\\Microsoft Services\\AdmPwd", "AdmPwdEnabled");
 
-            if (AdmPwdEnabled != "")
+            if (admPwdEnabled != string.Empty)
             {
-                Console.WriteLine("  {0,-37} : {1}", "LAPS Enabled", AdmPwdEnabled);
+                Console.WriteLine("  {0,-37} : {1}", "LAPS Enabled", admPwdEnabled);
 
-                string LAPSAdminAccountName = GetRegValue("HKLM", "Software\\Policies\\Microsoft Services\\AdmPwd", "AdminAccountName");
-                Console.WriteLine("  {0,-37} : {1}", "LAPS Admin Account Name", LAPSAdminAccountName);
+                string lAPSAdminAccountName = GetRegValue("HKLM", "Software\\Policies\\Microsoft Services\\AdmPwd", "AdminAccountName");
+                Console.WriteLine("  {0,-37} : {1}", "LAPS Admin Account Name", lAPSAdminAccountName);
 
-                string LAPSPasswordComplexity = GetRegValue("HKLM", "Software\\Policies\\Microsoft Services\\AdmPwd", "PasswordComplexity");
-                Console.WriteLine("  {0,-37} : {1}", "LAPS Password Complexity", LAPSPasswordComplexity);
+                string lAPSPasswordComplexity = GetRegValue("HKLM", "Software\\Policies\\Microsoft Services\\AdmPwd", "PasswordComplexity");
+                Console.WriteLine("  {0,-37} : {1}", "LAPS Password Complexity", lAPSPasswordComplexity);
 
-                string LAPSPasswordLength = GetRegValue("HKLM", "Software\\Policies\\Microsoft Services\\AdmPwd", "PasswordLength");
-                Console.WriteLine("  {0,-37} : {1}", "LAPS Password Length", LAPSPasswordLength);
+                string lAPSPasswordLength = GetRegValue("HKLM", "Software\\Policies\\Microsoft Services\\AdmPwd", "PasswordLength");
+                Console.WriteLine("  {0,-37} : {1}", "LAPS Password Length", lAPSPasswordLength);
 
-                string LAPSwdExpirationProtectionEnabled = GetRegValue("HKLM", "Software\\Policies\\Microsoft Services\\AdmPwd", "PwdExpirationProtectionEnabled");
-                Console.WriteLine("  {0,-37} : {1}", "LAPS Expiration Protection Enabled", LAPSwdExpirationProtectionEnabled);
+                string lAPSwdExpirationProtectionEnabled = GetRegValue("HKLM", "Software\\Policies\\Microsoft Services\\AdmPwd", "PwdExpirationProtectionEnabled");
+                Console.WriteLine("  {0,-37} : {1}", "LAPS Expiration Protection Enabled", lAPSwdExpirationProtectionEnabled);
             }
             else
             {
@@ -395,13 +413,13 @@ namespace Aware
         public static string GetRegValue(string hive, string path, string value)
         {
             // returns a single registry value under the specified path in the specified hive (HKLM/HKCU)
-            string regKeyValue = "";
+            string regKeyValue = string.Empty;
             if (hive == "HKCU")
             {
                 var regKey = Registry.CurrentUser.OpenSubKey(path);
                 if (regKey != null)
                 {
-                    regKeyValue = String.Format("{0}", regKey.GetValue(value));
+                    regKeyValue = string.Format("{0}", regKey.GetValue(value));
                 }
                 return regKeyValue;
             }
@@ -410,7 +428,7 @@ namespace Aware
                 var regKey = Registry.Users.OpenSubKey(path);
                 if (regKey != null)
                 {
-                    regKeyValue = String.Format("{0}", regKey.GetValue(value));
+                    regKeyValue = string.Format("{0}", regKey.GetValue(value));
                 }
                 return regKeyValue;
             }
@@ -419,7 +437,7 @@ namespace Aware
                 var regKey = Registry.LocalMachine.OpenSubKey(path);
                 if (regKey != null)
                 {
-                    regKeyValue = String.Format("{0}", regKey.GetValue(value));
+                    regKeyValue = string.Format("{0}", regKey.GetValue(value));
                 }
                 return regKeyValue;
             }
@@ -492,7 +510,7 @@ namespace Aware
             }
         }
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Banner(); // Print Banner
             DateandTime(); // Date and time, both localmachine and UTC.
