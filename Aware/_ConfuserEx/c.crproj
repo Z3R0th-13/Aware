@@ -1,0 +1,20 @@
+<project outputDir="C:\Users\cloud\Documents\Visual Studio 2017\Projects\Aware\Aware\obj\Release" baseDir="C:\Users\cloud\Documents\Visual Studio 2017\Projects\Aware\Aware\obj\Release" xmlns="http://confuser.codeplex.com">
+<rule pattern="true" />
+<module path="Aware.exe">
+<rule pattern="true">
+<protection id="anti ildasm" />
+<protection id="constants" />
+<protection id="ctrl flow" />
+<protection id="ref proxy" />
+<protection id="resources" />
+<protection id = "rename" >
+<argument name = "mode" value = "letters" />
+<argument name = "renPublic" value = "false" />
+<argument name = "renEnum" value = "false" />
+<argument name = "renameArgs" value = "false" />
+</protection >
+</rule>
+</module>
+<probePath>..\..\..\packages\StyleCop.6.1.0\lib\net40</probePath>
+<probePath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5.2</probePath>
+</project>
