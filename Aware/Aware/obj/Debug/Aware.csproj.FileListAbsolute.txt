@@ -1,0 +1,7 @@
+C:\Users\cloud\documents\visual studio 2017\Projects\Aware\Aware\bin\Debug\Aware.exe.config
+C:\Users\cloud\documents\visual studio 2017\Projects\Aware\Aware\bin\Debug\Aware.exe
+C:\Users\cloud\documents\visual studio 2017\Projects\Aware\Aware\bin\Debug\Aware.pdb
+C:\Users\cloud\documents\visual studio 2017\Projects\Aware\Aware\obj\Debug\Aware.exe
+C:\Users\cloud\documents\visual studio 2017\Projects\Aware\Aware\obj\Debug\Aware.pdb
+C:\Users\cloud\Documents\Visual Studio 2017\Projects\Aware\Aware\obj\Debug\Aware.csprojAssemblyReference.cache
+C:\Users\cloud\Documents\Visual Studio 2017\Projects\Aware\Aware\obj\Debug\Aware.csproj.CoreCompileInputs.cache
